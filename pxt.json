@@ -1,0 +1,12 @@
+{
+    "name": "chocobit",
+    "dependencies": {
+        "core": "*",
+        "radio": "*"
+    },
+    "description": "",
+    "files": [
+        "choco.ts",
+        "README.md"
+    ]
+}
