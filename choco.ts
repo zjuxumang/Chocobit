@@ -108,43 +108,62 @@ namespace ChocoCar {
         pins.i2cWriteBuffer(PCA9685_ADD, buf);
     }
 
-    //%blockId=Choco_move block="设置电机速度 左轮 %leftspeed |右轮 %rightspeed"
+    function RGB_init(): void{
+        neopixel.create(20, 12, 0)
+    }
+
+    //% blockId=Choco_init block="初始化智能车" color="#d43717"
+    //% weight=99
+    export function Choco_init() {
+        pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+        music.playTone(262, music.beat(BeatFraction.Quarter))
+        music.playTone(330, music.beat(BeatFraction.Quarter))
+        music.playTone(392, music.beat(BeatFraction.Half))
+        music.playTone(523, music.beat(BeatFraction.Half))
+    }
+
+    //% blockId=Choco_move block="设置电机速度 左轮 %leftspeed |右轮 %rightspeed" weight=90
+    //% leftspeed.min=-100 lelftspeed.max=100
+    //% rightspeed.min=-100 rightspeed.max=100
     export function move(leftspeed: number, rightspeed: number) {
 
         leftspeed = pins.map(leftspeed, -100, 100, -4095, 4095)
         rightspeed = pins.map(rightspeed, -100, 100, -4095, 4095)
-        if (leftspeed >= 0)
+        if (rightspeed >= 0)
         {
-            setPwm(0, leftspeed)
+            setPwm(0, rightspeed)
             setPwm(1, 0)    
         }
         else
         {
             setPwm(0, 0)
-            setPwm(1, -leftspeed)
+            setPwm(1, -rightspeed)
         }
-        if (rightspeed >= 0)
+        if (leftspeed >= 0)
         {
-            setPwm(2, rightspeed)
+            setPwm(2, leftspeed)
             setPwm(3, 0)    
         }
         else
         {
             setPwm(2, 0)
-            setPwm(3, -rightspeed)
+            setPwm(3, -leftspeed)
         }
 
     }
     //% blockId=Choco_CarCtrl block="智能车移动控制|%index"
     //% weight=93
-    //% blockGap=10
+    //% 
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=10
     export function CarCtrl(index: CarState): void {
         switch (index) {
             case CarState.Car_Run: move(100, 100); break;
             case CarState.Car_Back: move(-100, -100); break;
-            case CarState.Car_Left: move(60, 100); break;
-            case CarState.Car_Right: move(100, 60); break;
+            case CarState.Car_Left: move(0, 100); break;
+            case CarState.Car_Right: move(100, 0); break;
             case CarState.Car_Stop: move(0, 0); break;
             case CarState.Car_SpinLeft: move(-100, 100); break;
             case CarState.Car_SpinRight: move(100, -100); break;
@@ -152,7 +171,7 @@ namespace ChocoCar {
     }
     //% blockId=Choco_CarCtrlSpeed block="智能车移动控制|%index|速度 %speed"
     //% weight=92
-    //% blockGap=10
+    //% 
     //% speed.min=0 speed.max=100
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=10
     export function CarCtrlSpeed(index: CarState, speed: number): void {
@@ -168,22 +187,89 @@ namespace ChocoCar {
     }
 
     //% blockId=Choco_Servo block="舵机控制|编号 %num|角度 %value"
-    //% weight=50
-    //% blockGap=10
-    //% num.min=1 num.max=3 value.min=0 value.max=180
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
+    //% weight=80
+    //% 
+    //% value.min=0 value.max=180
+    //% num.fieldEditor="gridpicker" num.fieldOptions.columns=4
     export function Servo(num: enServo, value: number): void {
 
         // 50hz: 20,000 us
         let us = (value * 1800 / 180 + 600); // 0.6 ~ 2.4
         let pwm = us * 4096 / 20000;
-        setPwm(num + 2, pwm);
+        setPwm(num + 10, pwm);
 
     }
 
-    //% blockId=Choco_RGB_init block="初始化RGB彩灯"
-    export function RGB_init(): void{
-        neopixel.create(20, 8, 0)
+
+
+    export enum IR_sensor{
+        //% blockId=IR_Left2 block="左2"
+        Left2 = 0,
+        //% blockId=IR_Left1 block="左1"
+        Left1,
+        //% blockId=IR_Right1 block="右1"
+        Right1,
+        //% blockId=IR_Right2 block="右2"
+        Right2
+
+    }
+    export enum IR_state{
+        //% blockId=IR_black block="黑"
+        black = 0,
+        //% blockId=IR_white block="白"
+        white = 1
+    }
+    export enum enTouch {
+        //% blockId=NoTouch block="未触摸"
+        NoTouch = 0,
+        //% blockId=Touch block="触摸"
+        Touch = 1
+    }
+    //% blockId=Choco_touch block="检测到触摸输入" weight=15 color="#3d85c6"
+    export function read_touch(): boolean{
+        if (pins.digitalReadPin(DigitalPin.P15) == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    //% blockId=Choco_IRsensor block="循线传感器 %n |检测到 %state"
+    //% n.fieldEditor="gridpicker" n.fieldOptions.columns=4 color="#3d85c6"
+    export function read_IRsensor(n: IR_sensor,state:IR_state): boolean{
+        let pin = 0;
+        switch (n) {
+            case IR_sensor.Left1: pin = DigitalPin.P2; break;
+            case IR_sensor.Left2: pin = DigitalPin.P12; break;
+            case IR_sensor.Right1: pin = DigitalPin.P8; break;
+            case IR_sensor.Right2: pin = DigitalPin.P1; break;
+        }
+        if (pins.digitalReadPin(pin) == state) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //% blockId=Choco_ultrasonic block="超声波测距值"
+    //% color="#3d85c6"
+    //% weight=20
+    //% 
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    export function Ultrasonic(): number {
+
+        // send pulse
+        pins.setPull(DigitalPin.P9, PinPullMode.PullNone);
+        pins.digitalWritePin(DigitalPin.P9, 0);
+        control.waitMicros(2);
+        pins.digitalWritePin(DigitalPin.P9, 1);
+        control.waitMicros(15);
+        pins.digitalWritePin(DigitalPin.P9, 0);
+
+        // read pulse
+        let d = pins.pulseIn(DigitalPin.P14, PulseValue.High, 23200);
+        return d / 58;
     }
 }
 
@@ -295,6 +381,8 @@ namespace MUsensor {
         }
 
     }
+
+    
 
 
 }
