@@ -1,5 +1,6 @@
 {
     "name": "chocobit",
+    "version": "v1.0.1" ,
     "dependencies": {
         "core": "*",
         "radio": "*",
