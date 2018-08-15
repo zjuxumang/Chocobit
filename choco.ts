@@ -109,7 +109,7 @@ namespace ChocoCar {
     }
 
     function RGB_init(): void{
-        neopixel.create(20, 12, 0)
+        neopixel.create(5, 12, 0)
     }
 
     //% blockId=Choco_init block="初始化智能车" color="#d43717"
