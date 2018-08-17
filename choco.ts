@@ -282,7 +282,6 @@ namespace ChocoCar {
         let first: neopixel.Strip = null
         item = neopixel.create(DigitalPin.P5, 12, NeoPixelMode.RGB)
         item.setBrightness(5)
-        item.showColor(neopixel.colors(NeoPixelColors.Black))
         item.showRainbow(1, 360)
         control.inBackground(() => {
             while (true) {
