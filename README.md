@@ -1,4 +1,4 @@
-# chocobit
+# Chocobit
 
 - beta 
 Extension for Choco mbit    
