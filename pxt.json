@@ -1,16 +1,15 @@
 {
-    "name": "扩展包开发",
+    "name": "Chocobit",
+    "version": "v1.0.0",
     "dependencies": {
         "core": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.6.7",
         "radio": "*"
     },
-    "description": "",
+    "description": "Chocobit智能车扩展包",
     "files": [
-        "main.blocks",
-        "main.ts",
         "README.md",
-        "../choco.ts"
+        "choco.ts"
     ],
     "yotta": {
         "config": {
