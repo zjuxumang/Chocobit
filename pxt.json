@@ -1,6 +1,6 @@
 {
     "name": "chocobit",
-    "version": "1.0.7",
+    "version": "v1.0.7",
     "description": "Chocobit extension board driver",
     "lience": "MIT",
     "dependencies": {
