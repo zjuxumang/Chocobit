@@ -1,6 +1,6 @@
 {
     "name": "chocobit",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Chocobit extension board driver",
     "lience": "MIT",
     "dependencies": {
@@ -8,7 +8,6 @@
         "radio": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.6.7"
     },
-    
     "files": [
         "choco.ts",
         "README.md"
