@@ -225,7 +225,7 @@ namespace ChocoCar {
         //% blockId=Touch block="触摸"
         Touch = 1
     }
-    //% blockId=Choco_touch block="检测到触摸输入" weight=15 color="#3d85c6"
+    //% blockId=Choco_touch block="检测到触摸输入" weight=15 color="#3d85c6" icon="\uf2f6"
     export function read_touch(): boolean{
         if (pins.digitalReadPin(DigitalPin.P15) == 1) {
             return true;
@@ -235,7 +235,7 @@ namespace ChocoCar {
         }
     }
     //% blockId=Choco_IRsensor block="循线传感器 %n |检测到 %state"
-    //% n.fieldEditor="gridpicker" n.fieldOptions.columns=4 color="#3d85c6"
+    //% n.fieldEditor="gridpicker" n.fieldOptions.columns=4 color="#3d85c6" icon="\uf2f6"
     export function read_IRsensor(n: IR_sensor,state:IR_state): boolean{
         let pin = 0;
         switch (n) {
@@ -253,7 +253,7 @@ namespace ChocoCar {
     }
 
     //% blockId=Choco_ultrasonic block="超声波测距值"
-    //% color="#3d85c6"
+    //% color="#3d85c6" icon="\uf2f6"
     //% weight=20
     //% 
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
@@ -270,6 +270,32 @@ namespace ChocoCar {
         // read pulse
         let d = pins.pulseIn(DigitalPin.P14, PulseValue.High, 23200);
         return d / 58;
+    }
+
+    //% blockId=Choco_rainbowlight block="启动流水灯 流动速度 %v"
+    //% weight=1 color="#6aa84f" icon="\uf0eb"
+    //% v.defl=1
+    //% v.min=1 v.max=5
+    export function rainbowlight(v: number) {
+        let head: neopixel.Strip = null
+        let item: neopixel.Strip = null
+        let first: neopixel.Strip = null
+        item = neopixel.create(DigitalPin.P5, 12, NeoPixelMode.RGB)
+        item.setBrightness(5)
+        item.showColor(neopixel.colors(NeoPixelColors.Black))
+        item.showRainbow(1, 360)
+        control.inBackground(() => {
+            while (true) {
+                item.showRainbow(1, 360)
+                for (let index = 0; index <= 11; index++) {
+                    item.shift(1)
+                    item.show()
+                    head = item.range(0, index + 1)
+                    head.showRainbow(360 - 30 * index, 360)
+                    basic.pause(500/v)
+                }
+            }
+        })
     }
 }
 
