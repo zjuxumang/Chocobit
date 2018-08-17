@@ -1,0 +1,22 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <variables>
+    <variable type="" id="?Pq1x+p5JICgz1|rys~-">item</variable>
+    <variable type="" id="opTs5pM{^0AnH%e`OE8t">索引</variable>
+    <variable type="" id="#2D9wPjo4ZVf-U%Jq-9!">receivedNumber</variable>
+    <variable type="" id="B)?SXEtg~#8,Nc:C8{4(">signal</variable>
+    <variable type="" id="h[@qj1IUf/`D(1Lmiu_:">first</variable>
+    <variable type="" id="nAL-6/Rh7|uh$Lr[H|E^">head</variable>
+  </variables>
+  <block type="pxt-on-start" x="0" y="0">
+    <statement name="HANDLER">
+      <block type="Choco_rainbowlight">
+        <value name="v">
+          <shadow type="math_number_minmax">
+            <mutation min="1" max="5"></mutation>
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>

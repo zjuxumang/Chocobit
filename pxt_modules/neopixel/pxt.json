@@ -1,0 +1,29 @@
+{
+    "name": "neopixel",
+    "version": "0.3.10",
+    "description": "AdaFruit NeoPixel driver",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "neopixel.ts",
+        "sendbuffer.asm",
+        "_locales/ja/neopixel-strings.json"
+    ],
+    "testFiles": [
+        "neotest.ts"
+    ],
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "enabled": 0
+                }
+            }
+        }
+    },
+    "public": true,
+    "installedVersion": "github:microsoft/pxt-neopixel#v0.3.10"
+}

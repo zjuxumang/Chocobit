@@ -1,0 +1,15 @@
+{
+    "name": "Chocobit",
+    "version": "1.0.0",
+    "description": "Extension for Choco m:bit",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "choco.ts"
+    ],
+    "public": true,
+    "installedVersion": "github:zjuxumang/chocobit#5405e92a27090b7b6de4a70acad717ef4101091c"
+}
