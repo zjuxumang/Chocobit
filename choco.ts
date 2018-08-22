@@ -72,7 +72,7 @@ namespace ChocoCar {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADD, MODE1, 0x00)
-        setFreq(50);
+        setFreq(500);
         initialized = true
     }
     
@@ -114,14 +114,18 @@ namespace ChocoCar {
     //% blockId=Choco_init block="初始化智能车" color="#d43717"
     //% weight=99
     export function Choco_init() {
+        initPCA9685()
+        move(0, 0)
         pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
         pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
         pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
         pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
         music.playTone(262, music.beat(BeatFraction.Quarter))
         music.playTone(330, music.beat(BeatFraction.Quarter))
         music.playTone(392, music.beat(BeatFraction.Half))
         music.playTone(523, music.beat(BeatFraction.Half))
+
     }
 
     //% blockId=Choco_move block="设置电机速度 左轮 %leftspeed |右轮 %rightspeed" weight=90
@@ -133,13 +137,13 @@ namespace ChocoCar {
         rightspeed = pins.map(rightspeed, -100, 100, -4095, 4095)
         if (rightspeed >= 0)
         {
-            setPwm(0, rightspeed)
-            setPwm(1, 0)    
+            setPwm(1, rightspeed)
+            setPwm(0, 0)    
         }
         else
         {
-            setPwm(0, 0)
-            setPwm(1, -rightspeed)
+            setPwm(1, 0)
+            setPwm(0, -rightspeed)
         }
         if (leftspeed >= 0)
         {
@@ -255,7 +259,6 @@ namespace ChocoCar {
     //% color="#3d85c6" icon="\uf2f6"
     //% weight=20
     //% 
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function Ultrasonic(): number {
 
         // send pulse
@@ -271,24 +274,23 @@ namespace ChocoCar {
         return d / 58;
     }
 
-    //% blockId=Choco_rainbowlight block="启动流水灯 流动速度 %v"
+    //% blockId=Choco_rainbowlight block="启动流水灯 流动速度|%v||亮度|%brightness"
     //% weight=1 color="#6aa84f" icon="\uf0eb"
-    //% v.defl=1
-    //% v.min=1 v.max=5
-    export function rainbowlight(v: number) {
+    //% v.defl=1 brightness.defl=1
+    //% v.min=1 v.max=5 brightness.min=1 brightness.max=5
+    export function rainbowlight(v: number,brightness: number) {
         let head: neopixel.Strip = null
-        let item: neopixel.Strip = null
-        let first: neopixel.Strip = null
-        item = neopixel.create(DigitalPin.P5, 12, NeoPixelMode.RGB)
-        item.setBrightness(5)
-        item.showRainbow(1, 360)
+        let RGB: neopixel.Strip = null
+        RGB = neopixel.create(DigitalPin.P5, 12, NeoPixelMode.RGB)
+        RGB.setBrightness(10*brightness)
+        RGB.showRainbow(1, 360)
         control.inBackground(() => {
             while (true) {
-                item.showRainbow(1, 360)
+                RGB.showRainbow(1, 360)
                 for (let index = 0; index <= 11; index++) {
-                    item.shift(1)
-                    item.show()
-                    head = item.range(0, index + 1)
+                    RGB.shift(1)
+                    RGB.show()
+                    head = RGB.range(0, index + 1)
                     head.showRainbow(360 - 30 * index, 360)
                     basic.pause(500/v)
                 }

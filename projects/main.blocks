@@ -1,21 +1,109 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <variables>
-    <variable type="" id="?Pq1x+p5JICgz1|rys~-">item</variable>
+    <variable type="" id="?Pq1x+p5JICgz1|rys~-">RGB</variable>
     <variable type="" id="opTs5pM{^0AnH%e`OE8t">索引</variable>
     <variable type="" id="#2D9wPjo4ZVf-U%Jq-9!">receivedNumber</variable>
     <variable type="" id="B)?SXEtg~#8,Nc:C8{4(">signal</variable>
     <variable type="" id="h[@qj1IUf/`D(1Lmiu_:">first</variable>
     <variable type="" id="nAL-6/Rh7|uh$Lr[H|E^">head</variable>
+    <variable type="" id="n`S0Np()Cj(P2i!@x9Ac">item</variable>
   </variables>
-  <block type="pxt-on-start" x="0" y="0">
+  <block type="pxt-on-start" x="1" y="0">
     <statement name="HANDLER">
-      <block type="Choco_rainbowlight">
-        <value name="v">
-          <shadow type="math_number_minmax">
-            <mutation min="1" max="5"></mutation>
-            <field name="NUM">5</field>
+      <block type="Choco_init">
+        <next>
+          <block type="Choco_rainbowlight">
+            <value name="v">
+              <shadow type="math_number_minmax">
+                <mutation min="1" max="5"></mutation>
+                <field name="NUM">5</field>
+              </shadow>
+            </value>
+            <value name="brightness">
+              <shadow type="math_number_minmax">
+                <mutation min="1" max="5"></mutation>
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="device_forever" x="0" y="192">
+    <statement name="HANDLER">
+      <block type="controls_if">
+        <value name="IF0">
+          <shadow type="logic_boolean" id="p{mvWcC;z=`2p9v7w)*^">
+            <field name="BOOL">TRUE</field>
           </shadow>
+          <block type="Choco_touch"></block>
         </value>
+        <statement name="DO0">
+          <block type="basic_show_icon">
+            <field name="i">IconNames.Happy</field>
+            <next>
+              <block type="Choco_CarCtrl">
+                <field name="index">ChocoCar.CarState.Car_Run</field>
+                <next>
+                  <block type="device_pause">
+                    <value name="pause">
+                      <shadow type="math_number">
+                        <field name="NUM">800</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="Choco_CarCtrl">
+                        <field name="index">ChocoCar.CarState.Car_SpinLeft</field>
+                        <next>
+                          <block type="device_pause">
+                            <value name="pause">
+                              <shadow type="math_number">
+                                <field name="NUM">300</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="Choco_CarCtrl">
+                                <field name="index">ChocoCar.CarState.Car_SpinRight</field>
+                                <next>
+                                  <block type="device_pause">
+                                    <value name="pause">
+                                      <shadow type="math_number">
+                                        <field name="NUM">600</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="Choco_CarCtrl">
+                                        <field name="index">ChocoCar.CarState.Car_Stop</field>
+                                        <next>
+                                          <block type="device_start_melody">
+                                            <field name="options">MelodyOptions.Once</field>
+                                            <value name="melody">
+                                              <shadow type="device_builtin_melody">
+                                                <field name="melody">Melodies.PowerUp</field>
+                                              </shadow>
+                                            </value>
+                                            <next>
+                                              <block type="device_clear_display"></block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
       </block>
     </statement>
   </block>
