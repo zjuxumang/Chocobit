@@ -72,7 +72,7 @@ namespace ChocoCar {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADD, MODE1, 0x00)
-        setFreq(500);
+        setFreq(50);
         initialized = true
     }
     
@@ -100,8 +100,8 @@ namespace ChocoCar {
         }
         let buf = pins.createBuffer(5);
         buf[0] = LED0_ON_L + 4 * channel;
-        buf[1] = 0;
-        buf[2] = 0;
+        buf[1] = 0x00;
+        buf[2] = 0x00;
         buf[3] = off & 0xff;
         buf[4] = (off >> 8) & 0xff;
         pins.i2cWriteBuffer(PCA9685_ADD, buf);
@@ -121,6 +121,7 @@ namespace ChocoCar {
         pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
         pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
         pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
         music.playTone(262, music.beat(BeatFraction.Quarter))
         music.playTone(330, music.beat(BeatFraction.Quarter))
         music.playTone(392, music.beat(BeatFraction.Half))
@@ -133,8 +134,8 @@ namespace ChocoCar {
     //% rightspeed.min=-100 rightspeed.max=100
     export function move(leftspeed: number, rightspeed: number) {
 
-        leftspeed = pins.map(leftspeed, -100, 100, -4095, 4095)
-        rightspeed = pins.map(rightspeed, -100, 100, -4095, 4095)
+        leftspeed *=2.55*16
+        rightspeed *=2.55*16
         if (rightspeed >= 0)
         {
             setPwm(1, rightspeed)
@@ -262,12 +263,12 @@ namespace ChocoCar {
     export function Ultrasonic(): number {
 
         // send pulse
-        pins.setPull(DigitalPin.P9, PinPullMode.PullNone);
-        pins.digitalWritePin(DigitalPin.P9, 0);
+        pins.setPull(DigitalPin.P14, PinPullMode.PullUp);
+        pins.digitalWritePin(DigitalPin.P16, 0);
         control.waitMicros(2);
-        pins.digitalWritePin(DigitalPin.P9, 1);
+        pins.digitalWritePin(DigitalPin.P16, 1);
         control.waitMicros(15);
-        pins.digitalWritePin(DigitalPin.P9, 0);
+        pins.digitalWritePin(DigitalPin.P16, 0);
 
         // read pulse
         let d = pins.pulseIn(DigitalPin.P14, PulseValue.High, 23200);
