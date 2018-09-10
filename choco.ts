@@ -134,8 +134,8 @@ namespace ChocoCar {
     //% rightspeed.min=-100 rightspeed.max=100
     export function move(leftspeed: number, rightspeed: number) {
 
-        leftspeed *=2.55*16
-        rightspeed *=2.55*16
+        leftspeed =leftspeed*255/100*16
+        rightspeed =leftspeed*255/100*16
         if (rightspeed >= 0)
         {
             setPwm(1, rightspeed)
@@ -148,13 +148,13 @@ namespace ChocoCar {
         }
         if (leftspeed >= 0)
         {
-            setPwm(2, leftspeed)
-            setPwm(3, 0)    
+            setPwm(3, leftspeed)
+            setPwm(2, 0)    
         }
         else
         {
-            setPwm(2, 0)
-            setPwm(3, -leftspeed)
+            setPwm(3, 0)
+            setPwm(2, -leftspeed)
         }
 
     }

@@ -1,51 +1,6 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
   <variables></variables>
-  <block type="device_forever" x="20" y="22">
-    <statement name="HANDLER">
-      <block type="controls_if">
-        <value name="IF0">
-          <shadow type="logic_boolean" id="W7k/54v=vtkL}5_gONk:">
-            <field name="BOOL">TRUE</field>
-          </shadow>
-          <block type="Choco_touch"></block>
-        </value>
-        <statement name="DO0">
-          <block type="Choco_CarCtrl">
-            <field name="index">ChocoCar.CarState.Car_Run</field>
-            <next>
-              <block type="device_pause">
-                <value name="pause">
-                  <shadow type="math_number">
-                    <field name="NUM">500</field>
-                  </shadow>
-                </value>
-                <next>
-                  <block type="Choco_CarCtrl">
-                    <field name="index">ChocoCar.CarState.Car_SpinRight</field>
-                    <next>
-                      <block type="device_pause">
-                        <value name="pause">
-                          <shadow type="math_number">
-                            <field name="NUM">500</field>
-                          </shadow>
-                        </value>
-                        <next>
-                          <block type="Choco_CarCtrl">
-                            <field name="index">ChocoCar.CarState.Car_Stop</field>
-                          </block>
-                        </next>
-                      </block>
-                    </next>
-                  </block>
-                </next>
-              </block>
-            </next>
-          </block>
-        </statement>
-      </block>
-    </statement>
-  </block>
-  <block type="pxt-on-start" x="373" y="19">
+  <block type="pxt-on-start" x="-69" y="-6">
     <statement name="HANDLER">
       <block type="Choco_init">
         <next>
@@ -59,7 +14,7 @@
             <value name="brightness">
               <shadow type="math_number_minmax">
                 <mutation min="1" max="5"></mutation>
-                <field name="NUM">1</field>
+                <field name="NUM">5</field>
               </shadow>
             </value>
           </block>
@@ -67,4 +22,62 @@
       </block>
     </statement>
   </block>
+  <block type="device_forever" x="-67" y="121">
+    <statement name="HANDLER">
+      <block type="controls_if">
+        <value name="IF0">
+          <shadow type="logic_boolean" id="]Td5zbHEf(C6m)$KY$r+">
+            <field name="BOOL">TRUE</field>
+          </shadow>
+          <block type="logic_compare">
+            <field name="OP">LT</field>
+            <value name="A">
+              <shadow type="math_number">
+                <field name="NUM">15</field>
+              </shadow>
+            </value>
+            <value name="B">
+              <shadow type="math_number" id="G@H%DoSs@5C%evcdoAN$">
+                <field name="NUM">0</field>
+              </shadow>
+              <block type="Choco_ultrasonic"></block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="Choco_CarCtrl">
+            <field name="index">ChocoCar.CarState.Car_Run</field>
+            <next>
+              <block type="device_pause">
+                <value name="pause">
+                  <shadow type="math_number">
+                    <field name="NUM">500</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="Choco_CarCtrl">
+                    <field name="index">ChocoCar.CarState.Car_Stop</field>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="serial_writevalue" disabled="true" x="450" y="168">
+    <value name="name">
+      <shadow type="text">
+        <field name="TEXT">x</field>
+      </shadow>
+    </value>
+    <value name="value">
+      <shadow type="math_number" id="zP|:IsgHa9ZbqcoItum7">
+        <field name="NUM">0</field>
+      </shadow>
+      <block type="Choco_ultrasonic"></block>
+    </value>
+  </block>
+  <block type="Choco_touch" disabled="true" x="543" y="295"></block>
 </xml>
