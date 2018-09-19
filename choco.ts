@@ -134,27 +134,27 @@ namespace ChocoCar {
     //% rightspeed.min=-100 rightspeed.max=100
     export function move(leftspeed: number, rightspeed: number) {
 
-        leftspeed =leftspeed*255/100*16
-        rightspeed =leftspeed*255/100*16
+        leftspeed =leftspeed*256/100*16
+        rightspeed =rightspeed*256/100*16
         if (rightspeed >= 0)
         {
-            setPwm(1, rightspeed)
-            setPwm(0, 0)    
+            setPwm(1, rightspeed-1)   //智能车右轮为1，0通道
+            setPwm(0, 0)            //编程盒右电机为7，6通道
         }
         else
         {
             setPwm(1, 0)
-            setPwm(0, -rightspeed)
+            setPwm(0, -rightspeed-1)
         }
         if (leftspeed >= 0)
         {
-            setPwm(3, leftspeed)
+            setPwm(3, leftspeed-1)
             setPwm(2, 0)    
         }
         else
         {
             setPwm(3, 0)
-            setPwm(2, -leftspeed)
+            setPwm(2, -leftspeed-1)
         }
 
     }
@@ -200,7 +200,7 @@ namespace ChocoCar {
         // 50hz: 20,000 us
         let us = (value * 1800 / 180 + 600); // 0.6 ~ 2.4
         let pwm = us * 4096 / 20000;
-        setPwm(num + 10, pwm);
+        setPwm(num + 10, pwm);      //
 
     }
 

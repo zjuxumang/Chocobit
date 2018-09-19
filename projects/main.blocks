@@ -1,6 +1,8 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
-  <variables></variables>
-  <block type="pxt-on-start" x="-69" y="-6">
+  <variables>
+    <variable type="" id="OY.f`L+:{%##Y3-m@eg$">索引</variable>
+  </variables>
+  <block type="pxt-on-start" x="0" y="0">
     <statement name="HANDLER">
       <block type="Choco_init">
         <next>
@@ -14,7 +16,7 @@
             <value name="brightness">
               <shadow type="math_number_minmax">
                 <mutation min="1" max="5"></mutation>
-                <field name="NUM">5</field>
+                <field name="NUM">1</field>
               </shadow>
             </value>
           </block>
@@ -22,51 +24,37 @@
       </block>
     </statement>
   </block>
-  <block type="device_forever" x="-67" y="121">
+  <block type="device_forever" x="53" y="186">
     <statement name="HANDLER">
-      <block type="controls_if">
-        <value name="IF0">
-          <shadow type="logic_boolean" id="]Td5zbHEf(C6m)$KY$r+">
-            <field name="BOOL">TRUE</field>
-          </shadow>
-          <block type="logic_compare">
-            <field name="OP">LT</field>
-            <value name="A">
+      <block type="Choco_CarCtrl">
+        <field name="index">ChocoCar.CarState.Car_Run</field>
+        <next>
+          <block type="device_pause">
+            <value name="pause">
               <shadow type="math_number">
-                <field name="NUM">15</field>
+                <field name="NUM">1000</field>
               </shadow>
             </value>
-            <value name="B">
-              <shadow type="math_number" id="G@H%DoSs@5C%evcdoAN$">
-                <field name="NUM">0</field>
-              </shadow>
-              <block type="Choco_ultrasonic"></block>
-            </value>
-          </block>
-        </value>
-        <statement name="DO0">
-          <block type="Choco_CarCtrl">
-            <field name="index">ChocoCar.CarState.Car_Run</field>
             <next>
-              <block type="device_pause">
-                <value name="pause">
-                  <shadow type="math_number">
-                    <field name="NUM">500</field>
-                  </shadow>
-                </value>
+              <block type="Choco_CarCtrl">
+                <field name="index">ChocoCar.CarState.Car_Back</field>
                 <next>
-                  <block type="Choco_CarCtrl">
-                    <field name="index">ChocoCar.CarState.Car_Stop</field>
+                  <block type="device_pause">
+                    <value name="pause">
+                      <shadow type="math_number">
+                        <field name="NUM">1000</field>
+                      </shadow>
+                    </value>
                   </block>
                 </next>
               </block>
             </next>
           </block>
-        </statement>
+        </next>
       </block>
     </statement>
   </block>
-  <block type="serial_writevalue" disabled="true" x="450" y="168">
+  <block type="serial_writevalue" disabled="true" x="519" y="174">
     <value name="name">
       <shadow type="text">
         <field name="TEXT">x</field>
@@ -79,5 +67,5 @@
       <block type="Choco_ultrasonic"></block>
     </value>
   </block>
-  <block type="Choco_touch" disabled="true" x="543" y="295"></block>
+  <block type="Choco_touch" disabled="true" x="612" y="301"></block>
 </xml>

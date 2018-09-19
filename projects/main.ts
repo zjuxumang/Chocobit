@@ -1,9 +1,8 @@
 ChocoCar.Choco_init()
-ChocoCar.rainbowlight(5, 5)
+ChocoCar.rainbowlight(5, 1)
 basic.forever(() => {
-    if (15 < ChocoCar.Ultrasonic()) {
-        ChocoCar.CarCtrl(ChocoCar.CarState.Car_Run)
-        basic.pause(500)
-        ChocoCar.CarCtrl(ChocoCar.CarState.Car_Stop)
-    }
+    ChocoCar.CarCtrl(ChocoCar.CarState.Car_Run)
+    basic.pause(1000)
+    ChocoCar.CarCtrl(ChocoCar.CarState.Car_Back)
+    basic.pause(1000)
 })
