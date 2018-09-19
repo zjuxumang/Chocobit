@@ -67,5 +67,5 @@
       <block type="Choco_ultrasonic"></block>
     </value>
   </block>
-  <block type="Choco_touch" disabled="true" x="612" y="301"></block>
+  <block type="Choco_touch" disabled="true" x="686" y="439"></block>
 </xml>
